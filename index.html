@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purge Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" type="application/javascript"></script>
+</head>
+<body>
+    <div class="game-container">
+        <div class="score">
+            <div>Score: <span id="scoreDisplay">0</span></div>
+            <div>High Score: <span id="highScore">0</span></div>
+        </div>
+
+        <div class="game">
+            <div id="dino"></div>
+            <div id="cactus"></div>
+            <div id="start-instruction">Press the SpaceBar to Start the Game</div>
+        </div>
+
+        <div class="character-selection">
+            <h3>Choose Your Character</h3>
+            <div class="character-options">
+                <div class="character-option" data-character="KingLoui">
+                    <img src="img/KingLoui.png" alt="KingLoui Character">
+                    <span>KingLoui</span>
+                </div>
+                <div class="character-option" data-character="Gvan">
+                    <img src="img/gvan.png" alt="Gvan Character">
+                    <span>Gvan</span>
+                </div>
+                <div class="character-option" data-character="Mike">
+                    <img src="img/mike.png" alt="Mike Character">
+                    <span>Mike</span>
+                </div>
+                <div class="character-option" data-character="Molandak">
+                    <img src="img/molandak.png" alt="Molandak Character">
+                    <span>Molandak</span>
+                </div>
+                <div class="character-option" data-character="Mouch">
+                    <img src="img/mouch.png" alt="Mouch Character">
+                    <span>Mouch</span>
+                </div>
+                <div class="character-option" data-character="Chog">
+                    <img src="img/chog.png" alt="Chog Character">
+                    <span>Chog</span>
+                </div>
+                <div class="character-option" data-character="Moyaki">
+                    <img src="img/moyaki.png" alt="Moyaki Character">
+                    <span>Moyaki</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <img src="img/johnwrich.png" id="gameOverImage" alt="Game Over">
+            <h2>Game Is Over, You're Purged!</h2>
+            <p>Your Final Score: <span id="finalScore"></span></p>
+            <button id="restartButton">Restart Game</button>
+        </div>
+    </div>
+
+    <div id="mintSuccessModal" class="modal">
+        <div class="modal-content mint-success">
+            <div class="success-icon">✨</div>
+            <h2>Congratulations!</h2>
+            <p>You just minted your Purge Game NFT!</p>
+            <div class="score-display">Score: <span class="minted-score"></span></div>
+            <button class="close-button">Awesome!</button>
+            <button class="share-twitter-button"></button>
+        </div>
+    </div>
+
+    <footer class="game-footer">
+        <div class="creator-attribution">
+            <img src="img/mja.png" alt="MJ.A" class="creator-photo">
+            <a href="https://x.com/MjApe69" target="_blank" class="creator-link">by @Mj.A</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@metamask/detect-provider@2.0.0/dist/detect-provider.min.js"></script>
+    <script src="scripts.js"></script>
+
+</body>
+</html>
