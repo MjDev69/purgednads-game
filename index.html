@@ -6,10 +6,54 @@
     <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+    <!-- Add these in the head section of your HTML -->
+    
+
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" type="application/javascript"></script>
 </head>
 <body>
+   
+  
+  <!-- Keep your existing wallet connect view, it will be hidden after connection -->
     <div class="game-container">
+
+         <!-- Add this at the top of your page, typically right after opening the body tag -->
+<header class="game-header">
+    <div class="header-container">
+      <div class="game-logo">
+      </div>
+      
+      <!-- Header Wallet Profile - Initially Hidden -->
+      <div id="header-wallet-profile" class="header-wallet-profile" style="display: none;">
+        <div class="wallet-info">
+          <div class="network-indicator">
+            <span class="network-dot" id="headerNetworkDot"></span>
+            <span id="headerNetworkName">Monad Testnet</span>
+          </div>
+          <div class="wallet-address">
+            <span id="headerDisplayAddress">0x1234...5678</span>
+            <button id="headerCopyAddressBtn" class="small-icon-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 4V16C8 17.1 8.9 18 10 18H18C19.1 18 20 17.1 20 16V7.4L16.6 4H10C8.9 4 8 4.9 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16 4V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M4 12V20C4 21.1 4.9 22 6 22H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <button id="headerDisconnectWalletBtn" class="disconnect-btn">
+          Disconnect
+        </button>
+      </div>
+      <div id="compactLeaderboardBtn" class="compact-leaderboard-btn">
+        <span class="trophy-icon">🏆</span>
+        <span class="rank-indicator">#1:</span>
+        <span class="top-score" id="topScorePreview">--</span>
+        <span class="view-text">View Leaderboard</span>
+      </div>
+    </div>
+  </header>
+
         <div class="score">
             <div>Score: <span id="scoreDisplay">0</span></div>
             <div>High Score: <span id="highScore">0</span></div>
@@ -18,24 +62,64 @@
         <div class="game">
             <div id="dino"></div>
             <div id="cactus"></div>
-            <div id="start-instruction">Press the SpaceBar to Start the Game</div>
+            <div id="coin"></div> 
+            <div id="start-instruction">Connect your wallet to start playing</div>
+        </div>
+    
+        <div class="wallet-panel">
+            <!-- Wallet Connection View (shown initially) -->
+            <div id="wallet-connect-view">
+                <h3>Connect Your Wallet</h3>
+                <div class="wallet-options">
+                    <button id="connectMetamask" class="wallet-option">
+                        <img src="img/metamask-logo.png" alt="MetaMask">
+                        <span>MetaMask</span>
+                    </button>
+                    <button id="connectPhantom" class="wallet-option">
+                        <img src="img/phantom-logo.png" alt="Phantom">
+                        <span>Phantom</span>
+                    </button>
+                </div>
+                <div id="walletStatus" class="wallet-status">Wallet not connected</div>
+            </div>
+            
+            <!-- Wallet Profile View (hidden initially) -->
+            <div id="wallet-profile-view" style="display: none;">
+                <h3>Wallet Connected</h3>
+                <div class="wallet-profile">
+                    <div class="wallet-address">
+                        <span id="displayAddress">0x0000...0000</span>
+                        <button id="copyAddressBtn" class="icon-button" title="Copy address">
+                            <span>📋</span>
+                        </button>
+                    </div>
+                    <div class="network-indicator">
+                        <span class="network-dot"></span>
+                        <span id="networkName">Monad Testnet</span>
+                    </div>
+                </div>
+                <button id="disconnectWalletBtn" class="disconnect-button">Disconnect Wallet</button>
+            </div>
         </div>
 
-        <div class="character-selection">
+        <!-- NFT Status Panel (initially hidden) -->
+        <div class="nft-panel" style="display:none;">
+            <h3>PurgedNads NFT</h3>
+            <!-- NFT Preview Image -->
+            <div class="nft-preview">
+                <img src="nft-assets/images/purgeatory.jpg" alt="PurgedNads NFT" class="nft-image">
+            </div>
+            <div class="nft-info">
+                <span>Minted: <span id="nftsMinted">0</span>/<span id="maxSupply">2500</span></span>
+            </div>
+            <button id="mintNftBtn" class="mint-button">Mint PurgedNads NFT</button>
+            <div id="nftStatus" class="nft-status">You don't own the PurgedNads NFT</div>
+        </div>
+
+        <!-- Character Display (simplified) -->
+        <div class="character-selection" style="display:none;">
             <h3>Choose Your Character</h3>
             <div class="character-options">
-                <div class="character-option" data-character="KingLoui">
-                    <img src="img/KingLoui.png" alt="KingLoui Character">
-                    <span>KingLoui</span>
-                </div>
-                <div class="character-option" data-character="Gvan">
-                    <img src="img/gvan.png" alt="Gvan Character">
-                    <span>Gvan</span>
-                </div>
-                <div class="character-option" data-character="Mike">
-                    <img src="img/mike.png" alt="Mike Character">
-                    <span>Mike</span>
-                </div>
                 <div class="character-option" data-character="Molandak">
                     <img src="img/molandak.png" alt="Molandak Character">
                     <span>Molandak</span>
@@ -53,28 +137,37 @@
                     <span>Moyaki</span>
                 </div>
             </div>
+            <button id="startGameBtn" class="game-button">Start Game</button>
         </div>
     </div>
+        
+        <!-- Leaderboard Modal -->
+<div id="leaderboardModal" class="modal">
+    <div class="modal-content leaderboard-modal">
+      <div class="modal-header">
+        <h2>LEADERBOARD</h2>
+        <span class="subtitle">ALL-TIME RANKINGS</span>
+        <span class="close-modal" id="closeLeaderboardModal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="leaderboardList">
+          <!-- Leaderboard entries will be loaded here dynamically -->
+          <!-- This will be populated via JavaScript when the modal opens -->
+        </div>
+      </div>
+    </div>
+  </div>
 
     <div id="gameOverModal" class="modal">
-        <div class="modal-content">
-            <img src="img/johnwrich.png" id="gameOverImage" alt="Game Over">
-            <h2>Game Is Over, You're Purged!</h2>
-            <p>Your Final Score: <span id="finalScore"></span></p>
-            <button id="restartButton">Restart Game</button>
-        </div>
+    <div class="modal-content">
+        <span class="close-modal" id="closeGameOverModal">&times;</span>
+        <img src="img/johnwrich.png" id="gameOverImage" alt="Game Over">
+        <h2>Game Is Over, You're Purged!</h2>
+        <p>Your Final Score: <span id="finalScore"></span></p>
+        <button id="restartButton">Play Again</button>
+        <button id="viewLeaderboardBtn">View Leaderboard</button>
     </div>
-
-    <div id="mintSuccessModal" class="modal">
-        <div class="modal-content mint-success">
-            <div class="success-icon">✨</div>
-            <h2>Congratulations!</h2>
-            <p>You just minted your Purge Game NFT!</p>
-            <div class="score-display">Score: <span class="minted-score"></span></div>
-            <button class="close-button">Awesome!</button>
-            <button class="share-twitter-button"></button>
-        </div>
-    </div>
+</div>
 
     <footer class="game-footer">
         <div class="creator-attribution">
@@ -83,8 +176,85 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@metamask/detect-provider@2.0.0/dist/detect-provider.min.js"></script>
-    <script src="scripts.js"></script>
+    <!-- Add type="module" to scripts.js to fix the module loading issue -->
+    <script src="scripts.js" type="module"></script>
+
+    <!-- Add these HTML elements to your page, typically at the end of the body -->
+<!-- Mint Success Modal -->
+<div id="mintSuccessModal" class="modal">
+    <div class="modal-content mint-success">
+      <div class="modal-header">
+        <h2>🎉 Mint Successful!</h2>
+        <span class="close-modal" id="closeSuccessModal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="nft-display">
+          <img id="mintedNftImage" src="nft-assets/images/purgeatory.jpg" alt="Your New PurgedNads NFT">
+        </div>
+        <div class="success-message">
+          <p>Congratulations! You've successfully minted your PurgedNads NFT.</p>
+          <p class="token-info">Token ID: <span id="mintedTokenId">Check your wallet</span></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="viewOnExplorerBtn" class="secondary-button">View on Block Explorer</button>
+        <button id="closeSuccessBtn" class="primary-button">Let's Play!</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mint Failure Modal -->
+  <div id="mintFailureModal" class="modal">
+    <div class="modal-content mint-failure">
+      <div class="modal-header">
+        <h2>❌ Mint Failed</h2>
+        <span class="close-modal" id="closeFailureModal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="failure-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="#ff3b30" stroke-width="2"/>
+            <path d="M15 9L9 15M9 9L15 15" stroke="#ff3b30" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="failure-message">
+          <p>Oops! Something went wrong while minting your NFT.</p>
+          <p class="error-details" id="mintErrorDetails">Error details will appear here</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="closeFailureBtn" class="primary-button">Try Again</button>
+      </div>
+    </div>
+  </div>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyABz6LjsRqGmMU8Xl9b0nfwiG647-8gJSA",
+      authDomain: "purgednads.firebaseapp.com",
+      projectId: "purgednads",
+      storageBucket: "purgednads.firebasestorage.app",
+      messagingSenderId: "114385989579",
+      appId: "1:114385989579:web:afcab7a24f0ad8850c504e"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    // Make Firebase services available to the window object
+    window.db = db;
+    window.collection = collection;
+    window.addDoc = addDoc;
+    window.query = query;
+    window.orderBy = orderBy;
+    window.limit = limit;
+    window.getDocs = getDocs;
+  </script>
 
 </body>
 </html>
