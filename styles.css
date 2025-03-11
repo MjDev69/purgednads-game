@@ -1844,3 +1844,96 @@ w3m-button {
   50% { text-shadow: 0 0 15px gold, 0 0 30px gold; }
   100% { text-shadow: 0 0 5px gold; }
 }
+
+.tx-animation {
+  position: absolute;
+  z-index: 25;
+  font-size: 24px;
+  font-weight: bold;
+  color: #f6931b;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(246, 147, 27, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  animation: tx-float 1.5s ease-out forwards;
+}
+
+@keyframes tx-float {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -120px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Counter for transactions */
+.tx-counter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #f6931b;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 20;
+}
+
+.tx-counter-icon {
+  font-size: 12px;
+}
+
+.tx-counter-value {
+  min-width: 20px;
+  text-align: right;
+}
+
+.tx-counter-pulse {
+  animation: counter-pulse 0.5s ease-out;
+}
+
+@keyframes counter-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* For the chain icon with a glowing effect */
+.chain-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.chain-icon::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  background: rgba(246, 147, 27, 0.4);
+  z-index: -1;
+  animation: pulse-glow 1.5s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px rgba(246, 147, 27, 0.6); }
+  100% { box-shadow: 0 0 15px rgba(246, 147, 27, 0.8); }
+}

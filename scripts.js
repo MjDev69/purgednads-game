@@ -138,6 +138,10 @@ const monadTestnet = {
   let viewLeaderboardBtn;  // Will hold the reference to the button
   let leaderboardModal;    // Will hold the reference to the modal
   let closeLeaderboardModal; // Will hold the reference to the close button
+  
+  //Tx Variables
+  let txCounter = 0;
+  let txCounterElement = null;
 
   // Game State Variables (add these to your existing variables)
   let coinPosition = 580;
@@ -299,6 +303,9 @@ function initializeApp() {
 
     // Set up keyboard and touch events
     setupGameControls();
+
+    // Initialize TX counter when game loads
+    setupTxCounter();
     
     // Check if already connected, but with a delay to ensure providers are ready
     setTimeout(() => {
@@ -1081,6 +1088,8 @@ if (coinMoveInterval) {
     setupCollisionDetection();
 
     startCoinSpawnTimer();
+    // Reset TX counter when a new game starts
+    resetTxCounter();
     
     console.log("Game started successfully");
 
@@ -1129,6 +1138,9 @@ function handleObstacleReset() {
     gameSpeed = 1.8 ;  // Back to initial speed
     nextSpeedIncreaseScore = speedIncreaseThreshold; // Reset first threshold
     lastSpeedIncreaseTime = 0;  // Reset the time tracker
+
+    // Reset TX counter when game resets
+    resetTxCounter();
 
     // If you have a speed indicator, hide it 
     const speedIndicator = document.getElementById('speedIndicator');
@@ -1693,6 +1705,12 @@ async function sendEmptyTransaction() {
 
       // Send transaction without waiting - will use private key automatically
       sendEmptyTransaction();
+
+      // Show transaction animation
+    showTxAnimation();
+    
+    // Update transaction counter
+    updateTxCounter();
   
       setTimeout(function () {
         dino.classList.remove("jump");
@@ -2290,4 +2308,81 @@ function initializeCompactLeaderboardBtn() {
   function initializeCoin() {
     coin = document.getElementById("coin");
     console.log("Coin element initialized:", coin);
+  }
+
+  // Function to create or update the transaction counter
+function setupTxCounter() {
+    // Don't recreate if it already exists
+    if (txCounterElement) return;
+    
+    // Create counter element
+    txCounterElement = document.createElement('div');
+    txCounterElement.className = 'tx-counter';
+    txCounterElement.innerHTML = `
+      <span class="chain-icon">⛓️</span>
+      <span class="tx-counter-value">0</span>
+    `;
+    
+    // Add to game
+    const game = document.querySelector('.game');
+    if (game) {
+      game.appendChild(txCounterElement);
+    }
+  }
+  
+  // Function to update transaction counter
+  function updateTxCounter() {
+    txCounter++;
+    
+    if (txCounterElement) {
+      const counterValue = txCounterElement.querySelector('.tx-counter-value');
+      if (counterValue) {
+        counterValue.textContent = txCounter;
+        
+        // Add pulse animation
+        counterValue.classList.remove('tx-counter-pulse');
+        void counterValue.offsetWidth; // Force reflow
+        counterValue.classList.add('tx-counter-pulse');
+      }
+    }
+  }
+  
+  // Function to create transaction animation
+  function showTxAnimation() {
+    const dino = document.getElementById('dino');
+    if (!dino) return;
+    
+    // Get dino position
+    const dinoRect = dino.getBoundingClientRect();
+    const gameRect = document.querySelector('.game').getBoundingClientRect();
+    
+    // Create TX element
+    const txElement = document.createElement('div');
+    txElement.className = 'tx-animation';
+    txElement.textContent = 'TX';
+    
+    // Position it relative to dino
+    txElement.style.left = `${dinoRect.left - gameRect.left + (dinoRect.width / 2) - 20}px`;
+    txElement.style.top = `${dinoRect.top - gameRect.top}px`;
+    
+    // Add to game
+    document.querySelector('.game').appendChild(txElement);
+    
+    // Remove after animation completes
+    setTimeout(() => {
+      if (txElement.parentNode) {
+        txElement.parentNode.removeChild(txElement);
+      }
+    }, 1600); // Slightly longer than animation duration
+  }
+  
+  // Function to reset transaction counter
+  function resetTxCounter() {
+    txCounter = 0;
+    if (txCounterElement) {
+      const counterValue = txCounterElement.querySelector('.tx-counter-value');
+      if (counterValue) {
+        counterValue.textContent = '0';
+      }
+    }
   }
