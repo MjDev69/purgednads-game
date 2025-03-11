@@ -1362,7 +1362,7 @@ w3m-button {
   border-radius: 8px;
   padding: 20px;
   margin: 20px auto;
-  max-width: 620px;
+  max-width: 720px;
   text-align: center;
 }
 
@@ -1999,3 +1999,196 @@ w3m-button {
   width: 16px;
   height: 16px;
 }
+
+/* Desktop Game Enhancement - Add these to your styles.css file */
+
+/* Make game larger on desktop */
+@media (min-width: 1024px) {
+  /* Larger game container */
+  .game-container {
+    max-width: 1000px;
+    padding: 30px;
+  }
+  
+  /* Larger game area */
+  .game {
+    width: 900px;
+    height: 300px;
+    background-size: cover;
+  }
+  
+  /* Adjusted character size and position */
+  #dino {
+    width: 75px;
+    height: 75px;
+    background-size: 75px 75px;
+    top: 225px; /* Adjusted for larger height */
+  }
+  
+  /* Adjusted obstacle size and position */
+  #cactus {
+    width: 30px;
+    height: 60px;
+    background-size: 30px 60px;
+    top: 240px; /* Adjusted for larger height */
+    left: 870px; /* Starting position adjusted for wider game */
+  }
+  
+  /* Adjusted coin size and position */
+  #coin {
+    width: 45px;
+    height: 45px;
+    background-size: 45px 45px;
+    top: 190px; /* Higher position in the larger game area */
+    left: 870px;
+  }
+  
+  /* Update the animation for obstacles */
+  @keyframes block {
+    0% { left: 870px; }
+    100% { left: -30px; }
+  }
+  
+  /* Update jump animation for larger character */
+  @keyframes jump {
+    0% { top: 225px; }
+    20% { top: 185px; }
+    50% { top: 105px; }
+    80% { top: 185px; }
+    100% { top: 225px; }
+  }
+  
+  /* Character selection larger thumbnails */
+  .character-option img {
+    width: 120px;
+    height: 120px;
+  }
+  
+  /* Improved score display */
+  .score {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  /* Larger NFT preview */
+  .nft-image {
+    width: 250px;
+    height: 250px;
+  }
+  
+  /* Larger countdown numbers */
+  .countdown-number {
+    font-size: 120px;
+  }
+  
+  /* Improved modal sizing */
+  .modal-content {
+    max-width: 600px;
+  }
+  
+  /* Larger game over image */
+  #gameOverImage {
+    max-width: 250px;
+  }
+}
+
+/* Optional: Add some advanced visual improvements for desktop */
+@media (min-width: 1024px) {
+  /* Add depth to the game area with subtle shadow */
+  .game {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .game:hover {
+    box-shadow: 0 15px 40px rgba(74, 144, 226, 0.5);
+  }
+  
+  /* Animated background for better visual interest */
+  body {
+    background: linear-gradient(135deg, #121212, #1e1e1e);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+  }
+  
+  @keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Improved button hover effects */
+  .wallet-option:hover, .mint-button:hover, .game-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Smoother transitions */
+  .character-option, .wallet-option, .mint-button, .game-button {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+}
+
+/* Simplified Loading Tip Styles - Add to your styles.css file */
+.simple-loading-container {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.loading-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 5px;
+  background-color: #f6931b;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.simple-tip-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin: 0 auto;
+  max-width: 90%;
+  position: relative;
+}
+
+.simple-tip {
+  color: #e0e0e0;
+  font-size: 15px;
+  line-height: 1.4;
+  text-align: center;
+  margin: 0;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.simple-tip.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tip-highlight {
+  color: #f6931b;
+  font-weight: 600;
+}
+
+/* Animation for loading dots */
+@keyframes loadingPulse {
+  0% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.3; transform: scale(1); }
+}
+
+.dot-1 { animation: loadingPulse 1.5s infinite 0s; }
+.dot-2 { animation: loadingPulse 1.5s infinite 0.2s; }
+.dot-3 { animation: loadingPulse 1.5s infinite 0.4s; }
