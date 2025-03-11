@@ -1842,39 +1842,45 @@ function gameOverSequence() {
 let latestNonce = null;
 
 // Function to send empty transactions without waiting
+// Replace your existing sendEmptyTransaction function
+// Replace your existing sendEmptyTransaction function
 async function sendEmptyTransaction() {
   try {
-      const { signer, provider } = await getPrivateKeySigner();
-
-      // If this is the first transaction, get the latest nonce from the network
-      if (latestNonce === null) {
-          latestNonce = await provider.getTransactionCount(signer.address, "pending");
-      }
-
-      console.log(`🚀 Sending transaction with nonce: ${latestNonce}`);
-
-      const tx = {
-          to: "0x0000000000000000000000000000000000000000", // Send to zero address
-          value: ethers.utils.parseEther("0"), // 0 ETH
-          gasLimit: 21000,
-          nonce: latestNonce, // ✅ Use manually tracked nonce
-      };
-
-      // Increment the nonce for the next transaction
-      latestNonce++;
-
-      // Send transaction without waiting
-      signer.sendTransaction(tx).then((txResponse) => {
-          console.log("✅ Transaction sent:", txResponse.hash);
-      }).catch((error) => {
-          console.error("❌ Transaction failed:", error);
-      });
-
+    const SERVER_URL = 'https://purgednads-server.onrender.com';
+    
+    console.log(`🚀 Sending transaction request to backend`);
+    
+    const response = await fetch(`${SERVER_URL}/api/tx`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    });
+    
+    const data = await response.json();
+    
+    // Only show animation and update counter if transaction was successful
+    // AND not rate limited
+    if (data.success && !data.rateLimit) {
+      console.log("✅ Transaction sent:", data.txHash);
+      
+      // Show transaction animation only for real transactions
+      showTxAnimation();
+      updateTxCounter();
+    } else if (data.rateLimit) {
+      // Log rate limit but don't show animation
+      console.log("⏱️ Transaction rate limited:", data.message);
+    } else {
+      console.error("❌ Transaction failed:", data.error);
+    }
   } catch (error) {
-      console.error("❌ Failed to send transaction:", error);
+    console.error("❌ Failed to send transaction:", error);
+    // Don't show animation or update counter on errors
   }
 }
 
+// Jump Mechanism
 // Jump Mechanism
 function jump() {
   if (!walletConnected || !ownsNFT) {
@@ -1891,14 +1897,8 @@ function jump() {
     jumpSound.play();
     dino.classList.add("jump");
 
-    // Send transaction without waiting - will use private key automatically
+    // Send transaction - ONLY this, don't show animation here
     sendEmptyTransaction();
-
-    // Show transaction animation
-  showTxAnimation();
-  
-  // Update transaction counter
-  updateTxCounter();
 
     setTimeout(function () {
       dino.classList.remove("jump");
