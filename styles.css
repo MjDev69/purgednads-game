@@ -1937,3 +1937,65 @@ w3m-button {
   0% { box-shadow: 0 0 5px rgba(246, 147, 27, 0.6); }
   100% { box-shadow: 0 0 15px rgba(246, 147, 27, 0.8); }
 }
+
+
+.wallet-refresh-btn {
+  background: rgba(90, 74, 255, 0.2);
+  color: #5a4aff;
+  border: 1px solid #5a4aff;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.wallet-refresh-btn:hover {
+  background: rgba(90, 74, 255, 0.3);
+}
+
+.nft-status.loading {
+  background-color: rgba(90, 74, 255, 0.2);
+  color: #5a4aff;
+}
+
+/* Add a subtle loading animation to the button while checking */
+@keyframes button-loading {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.mint-button:disabled {
+  background: linear-gradient(90deg, #4a5568, #5a6578, #4a5568);
+  background-size: 200% auto;
+  animation: button-loading 2s ease infinite;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.social-button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.social-button:hover {
+  background-color: #333;
+}
+
+.social-button svg {
+  width: 16px;
+  height: 16px;
+}

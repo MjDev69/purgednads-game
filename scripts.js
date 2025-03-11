@@ -845,9 +845,17 @@ async function addMonadNetwork(provider) {
   
   async function updateNFTInfo() {
     try {
-      // Get total supply and max supply
-      const totalSupply = await nftContract.totalSupply();
-      const maxSupplyValue = await nftContract.maxSupply();
+       // Show loading state first
+    nftStatus.textContent = "Checking NFT status...";
+    nftStatus.className = "nft-status loading";
+    
+    // Update mint button to show loading state
+    mintNftBtn.disabled = true;
+    mintNftBtn.textContent = "Checking NFT Status...";
+
+    // Get total supply and max supply
+    const totalSupply = await nftContract.totalSupply();
+    const maxSupplyValue = await nftContract.maxSupply();
       
       // Update display
       nftsMinted.textContent = totalSupply.toString();
@@ -2386,3 +2394,8 @@ function setupTxCounter() {
       }
     }
   }
+
+  // Set up X follow button
+document.getElementById('followXBtn').addEventListener('click', function() {
+  window.open('https://x.com/PurgedNads', '_blank');
+});
