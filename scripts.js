@@ -184,21 +184,6 @@ window.addEventListener('resize', () => {
 });
 
 
-// New function for private key transactions
-async function getPrivateKeySigner() {
-  try {
-      const provider = new ethers.providers.JsonRpcProvider(MONAD_RPC_URL);
-      const privateKey = 'da26b8ec079a003d3dc916cf8350487a3fca26e03f83d43d212f49826f25f349'; // Replace with your private key
-
-      const signer = new ethers.Wallet(privateKey, provider);
-      return { signer, provider };
-  } catch (error) {
-      console.error('Private key signer initialization error:', error);
-      throw error;
-  }
-}
-
-
 // This should be placed before any other wallet connection code is initialized
 
 // Function to safely initialize wallet providers
