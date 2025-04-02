@@ -931,9 +931,9 @@ function repositionCharacterSelection() {
         const loadingTips = initSimpleLoadingTips();
         loadingTips.show();
         
-        // Show loading state in status text
-        nftStatus.textContent = "Checking NFT status...";
-        nftStatus.className = "nft-status loading";
+        // Comment out or remove this line
+        // nftStatus.textContent = "Checking NFT status...";
+        // nftStatus.className = "nft-status loading";
         
         // Update mint button to show loading state
         mintNftBtn.disabled = true;
@@ -954,10 +954,12 @@ function repositionCharacterSelection() {
         // Hide loading tips
         loadingTips.hide();
         
-        // Your existing completion logic
+        // Your existing completion logic - remove or comment out references to nftStatus
         if (ownsNFT) {
-            nftStatus.textContent = "You own the PurgedNads NFT!";
-            nftStatus.className = "nft-status connected";
+            // Comment out or remove this line
+            // nftStatus.textContent = "You own the PurgedNads NFT!";
+            // nftStatus.className = "nft-status connected";
+            
             mintNftBtn.disabled = true;
             mintNftBtn.textContent = "Already Minted (1 per Wallet)";
             
@@ -966,8 +968,10 @@ function repositionCharacterSelection() {
             repositionCharacterSelection();
             startInstruction.textContent = "Press the Start Game button";
         } else {
-            nftStatus.textContent = "You don't own the PurgedNads NFT";
-            nftStatus.className = "nft-status not-connected";
+            // Comment out or remove this line
+            // nftStatus.textContent = "You don't own the PurgedNads NFT";
+            // nftStatus.className = "nft-status not-connected";
+            
             mintNftBtn.disabled = false;
             mintNftBtn.textContent = "Mint PurgedNads NFT (0.05 MON)";
             
@@ -978,14 +982,13 @@ function repositionCharacterSelection() {
     } catch (error) {
         console.error("Error updating NFT info:", error);
         
-        // Improved error handling for blockchain errors
-        if (error.message && error.message.includes("missing revert data")) {
-            nftStatus.textContent = "Network busy. Please try again in a moment.";
-        } else {
-            nftStatus.textContent = "Error checking NFT status";
-        }
-        
-        nftStatus.className = "nft-status not-connected";
+        // Comment out or remove these lines
+        // if (error.message && error.message.includes("missing revert data")) {
+        //    nftStatus.textContent = "Network busy. Please try again in a moment.";
+        // } else {
+        //    nftStatus.textContent = "Error checking NFT status";
+        // }
+        // nftStatus.className = "nft-status not-connected";
         
         // Hide loading tips on error
         const loadingTips = initSimpleLoadingTips();
